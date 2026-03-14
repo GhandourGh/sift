@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>CV Evolution Demo</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      font-weight: 600;
+      margin: 0.75rem 0 0.25rem;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+    #startBtn {
+      padding: 0.65rem 1.5rem;
+      font-size: 1rem;
+      background: #2a7fd4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 0.75rem;
+    }
+    #startBtn:hover { background: #1a6fc4; }
+    #startBtn:disabled { background: #555; cursor: not-allowed; }
+    #panelGrid {
+      display: block;
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+      background: #111;
+      border-radius: 8px;
+    }
+    .status {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 0.5rem;
+      min-height: 1.2rem;
+    }
+    .error { color: #e66; }
+    .container { width: 100%; max-width: 680px; padding: 0 0.5rem; }
+    video { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CV Demo</h1>
+    <p class="subtitle">No app — just tap below. Uses your camera.</p>
+    <button id="startBtn" type="button">Tap to start</button>
+    <img id="panelGrid" alt="Live view: original, edges, SIFT, YOLO" />
+    <p id="status" class="status" aria-live="polite"></p>
+  </div>
+  <video id="video" playsinline muted></video>
+  <script src="app.js"></script>
+</body>
+</html>

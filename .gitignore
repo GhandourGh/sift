@@ -1,0 +1,22 @@
+# Results and recordings
+results/
+*.mp4
+*.avi
+*.mov
+*.png
+*.jpg
+*.jpeg
+
+# Public / input videos
+public/
+*.mp4
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor / tooling
+.cursor/
+.vscode/
+.idea/
