@@ -1,9 +1,0 @@
-__pycache__
-*.pyc
-*.pyo
-.pytest_cache
-results/
-*.mp4
-*.png
-.git
-.cursor

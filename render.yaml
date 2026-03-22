@@ -1,9 +1,0 @@
-# Render.com blueprint for CV Web Demo (optional).
-# If your repo root is V2, use this from the repo root and set root dir to V2.
-services:
-  - type: web
-    name: cv-evolution-demo
-    runtime: docker
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
-    # Or without Docker: env: python, buildCommand: pip install -r requirements.txt, startCommand: uvicorn web_app:app --host 0.0.0.0 --port $PORT
