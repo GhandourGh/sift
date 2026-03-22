@@ -9,10 +9,8 @@ import os
 # Paths
 # ----------------------------------------------------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-_MODEL_PATH = os.path.join(BASE_DIR, "..", "V1", "yolov8n.pt")
-MODEL_PATH = _MODEL_PATH if os.path.isfile(_MODEL_PATH) else "yolov8n.pt"
-VIDEO_PATH = os.path.join(BASE_DIR, "..", "public", "sift.mp4")
-VIDEO_SOURCE = VIDEO_PATH
+MODEL_PATH = os.path.join(BASE_DIR, "yolov8n.pt")
+VIDEO_SOURCE = os.path.join(BASE_DIR, "web", "public", "sift.mp4")
 
 # ----------------------------------------------------------------------
 # Resolution

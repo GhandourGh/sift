@@ -7,8 +7,6 @@ raw JPEG composites, enabling rich frontend visualizations.
 Endpoints:
   GET  /health         — Check detector status
   POST /process-frame  — Process a single frame, return panels + metrics
-  POST /sweep          — Run single perturbation sweep
-  POST /sweep-all      — Run all perturbation sweeps
 """
 
 import json
@@ -166,3 +164,7 @@ async def serve_index():
 
 if os.path.isdir(WEB_DIR):
     app.mount("/", StaticFiles(directory=WEB_DIR), name="static")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
