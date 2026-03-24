@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>CV Evolution</title>
+  <link rel="stylesheet" href="style.css?v=7">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-left">
+      <span class="logo-dot"></span>
+      <h1>CV Evolution</h1>
+    </div>
+    <div class="header-center">
+      <span class="tl-node" style="--c:#00ff80">Edge</span>
+      <span class="tl-sep">&#8594;</span>
+      <span class="tl-node" style="--c:#ffb400">SIFT</span>
+      <span class="tl-sep">&#8594;</span>
+      <span class="tl-node" style="--c:#b400ff">CNN</span>
+      <span class="tl-sep">&#8594;</span>
+      <span class="tl-node" style="--c:#0080ff">YOLO</span>
+    </div>
+    <div class="header-right">
+      <span id="liveIndicator" class="live-badge">
+        <span class="live-pulse"></span>LIVE
+      </span>
+      <button id="startBtn" type="button" class="btn btn-primary">&#128247; Camera</button>
+      <button id="videoBtn" type="button" class="btn btn-video">&#9654; Video</button>
+      <button id="chartsBtn" type="button" class="btn btn-secondary">Charts</button>
+      <button id="statsBtn" type="button" class="btn btn-secondary">Stats</button>
+    </div>
+  </header>
+
+  <div class="panels-grid">
+
+    <!-- Edge Detection -->
+    <div class="panel-card" style="--accent:#00ff80">
+      <div class="panel-header">
+        <span class="panel-name">Edge Detection</span>
+        <span class="panel-year">Canny &middot; 1986</span>
+      </div>
+      <div class="panel-image-wrap">
+        <img id="img-edge" alt="" />
+        <div class="panel-empty">
+          <span class="empty-icon">&#9632;</span>
+          <span>No signal</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="panel-metric">
+          <span class="metric-label">Density</span>
+          <span id="m-edge-density" class="metric-val">—</span>
+        </span>
+        <span class="panel-metric">
+          <span class="metric-label">Time</span>
+          <span id="m-edge-time" class="metric-val">—</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- SIFT -->
+    <div class="panel-card" style="--accent:#ffb400">
+      <div class="panel-header">
+        <span class="panel-name">SIFT Features</span>
+        <span class="panel-year">Lowe &middot; 2004</span>
+      </div>
+      <div class="panel-image-wrap">
+        <img id="img-sift" alt="" />
+        <div class="panel-empty">
+          <span class="empty-icon">&#9632;</span>
+          <span>No signal</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="panel-metric">
+          <span class="metric-label">Keypoints</span>
+          <span id="m-sift-kp" class="metric-val">—</span>
+        </span>
+        <span class="panel-metric">
+          <span class="metric-label">Tracked</span>
+          <span id="m-sift-tracked" class="metric-val">—</span>
+        </span>
+        <span class="panel-metric">
+          <span class="metric-label">Time</span>
+          <span id="m-sift-time" class="metric-val">—</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- CNN -->
+    <div class="panel-card" style="--accent:#b400ff">
+      <div class="panel-header">
+        <span class="panel-name">CNN (MobileNetV2)</span>
+        <span class="panel-year">ImageNet &middot; 2012</span>
+      </div>
+      <div class="panel-image-wrap">
+        <img id="img-cnn" alt="" />
+        <div class="panel-empty">
+          <span class="empty-icon">&#9632;</span>
+          <span>No signal</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="panel-metric">
+          <span class="metric-label">Prediction</span>
+          <span id="m-cnn-label" class="metric-val">—</span>
+        </span>
+        <span class="panel-metric">
+          <span class="metric-label">Confidence</span>
+          <span id="m-cnn-conf" class="metric-val">—</span>
+        </span>
+        <span class="panel-metric">
+          <span class="metric-label">Time</span>
+          <span id="m-cnn-time" class="metric-val">—</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- YOLO -->
+    <div class="panel-card" style="--accent:#0080ff">
+      <div class="panel-header">
+        <span class="panel-name">YOLOv8 Detection</span>
+        <span class="panel-year">Real-time &middot; 2015</span>
+      </div>
+      <div class="panel-image-wrap">
+        <img id="img-yolo" alt="" />
+        <div class="panel-empty">
+          <span class="empty-icon">&#9632;</span>
+          <span>No signal</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="panel-metric">
+          <span class="metric-label">Objects</span>
+          <span id="m-yolo-det" class="metric-val">—</span>
+        </span>
+        <span class="panel-metric">
+          <span class="metric-label">Person Conf</span>
+          <span id="m-yolo-conf" class="metric-val">—</span>
+        </span>
+        <span class="panel-metric">
+          <span class="metric-label">Time</span>
+          <span id="m-yolo-time" class="metric-val">—</span>
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Perturbation Controls Bar -->
+  <div class="controls-bar">
+    <span class="controls-label">Perturbations</span>
+    <div class="perturb-items">
+      <div class="perturb-item">
+        <label class="perturb-toggle">
+          <input type="checkbox" id="chk-noise">
+          <span class="toggle-name">Noise</span>
+        </label>
+        <input type="range" id="slider-noise" min="0" max="120" value="0" step="5">
+        <span id="val-noise" class="perturb-val">0</span>
+      </div>
+      <div class="perturb-item">
+        <label class="perturb-toggle">
+          <input type="checkbox" id="chk-blur">
+          <span class="toggle-name">Blur</span>
+        </label>
+        <input type="range" id="slider-blur" min="3" max="51" value="3" step="2">
+        <span id="val-blur" class="perturb-val">3</span>
+      </div>
+      <div class="perturb-item">
+        <label class="perturb-toggle">
+          <input type="checkbox" id="chk-rotation">
+          <span class="toggle-name">Rotate</span>
+        </label>
+        <input type="range" id="slider-rotation" min="0" max="90" value="0" step="5">
+        <span id="val-rotation" class="perturb-val">0</span>
+      </div>
+      <div class="perturb-item">
+        <label class="perturb-toggle">
+          <input type="checkbox" id="chk-brightness">
+          <span class="toggle-name">Brightness</span>
+        </label>
+        <input type="range" id="slider-brightness" min="-180" max="100" value="0" step="10">
+        <span id="val-brightness" class="perturb-val">0</span>
+      </div>
+    </div>
+    <button id="resetBtn" type="button" class="btn btn-ghost">Reset</button>
+  </div>
+
+  <!-- Charts Panel -->
+  <div id="chartsPanel" class="charts-panel">
+    <div class="charts-header">
+      <h2>Live Performance Charts</h2>
+      <button id="chartsClose" class="btn-icon">&#x2715;</button>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-title">Processing Time per Algorithm</div>
+      <div class="chart-wrap"><canvas id="chartTime"></canvas></div>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-title">Processing Time History</div>
+      <div class="chart-wrap chart-wrap-lg"><canvas id="chartTimeHistory"></canvas></div>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-title">Algorithm Metrics</div>
+      <div class="chart-wrap chart-wrap-lg"><canvas id="chartMetrics"></canvas></div>
+    </div>
+  </div>
+  <div id="chartsBackdrop" class="charts-backdrop"></div>
+
+  <!-- Stats Overlay Panel -->
+  <div id="statsPanel" class="stats-panel">
+    <div class="stats-header">
+      <h2>Algorithm Metrics</h2>
+      <button id="statsClose" class="btn-icon">&#x2715;</button>
+    </div>
+
+    <div class="stats-group" style="--accent:#00ff80">
+      <div class="stats-algo-title">Edge Detection</div>
+      <div class="stats-row"><span>Edge Density</span><span id="s-edge-density">—</span></div>
+      <div class="stats-row"><span>Processing</span><span id="s-edge-time">—</span></div>
+    </div>
+
+    <div class="stats-group" style="--accent:#ffb400">
+      <div class="stats-algo-title">SIFT Features</div>
+      <div class="stats-row"><span>Keypoints</span><span id="s-sift-kp">—</span></div>
+      <div class="stats-row"><span>Tracked</span><span id="s-sift-tracked">—</span></div>
+      <div class="stats-row"><span>Processing</span><span id="s-sift-time">—</span></div>
+    </div>
+
+    <div class="stats-group" style="--accent:#b400ff">
+      <div class="stats-algo-title">CNN (MobileNetV2)</div>
+      <div class="stats-row"><span>Prediction</span><span id="s-cnn-label">—</span></div>
+      <div class="stats-row"><span>Confidence</span><span id="s-cnn-conf">—</span></div>
+      <div class="stats-row"><span>Processing</span><span id="s-cnn-time">—</span></div>
+    </div>
+
+    <div class="stats-group" style="--accent:#0080ff">
+      <div class="stats-algo-title">YOLOv8 Detection</div>
+      <div class="stats-row"><span>Objects</span><span id="s-yolo-det">—</span></div>
+      <div class="stats-row"><span>Person Conf</span><span id="s-yolo-conf">—</span></div>
+      <div class="stats-row"><span>Processing</span><span id="s-yolo-time">—</span></div>
+    </div>
+
+    <div class="stats-timing">
+      <div class="stats-timing-title">Processing Time</div>
+      <div class="timing-row">
+        <span class="timing-label" style="color:#00ff80">Edge</span>
+        <div class="timing-track"><div id="bar-edge" class="timing-fill" style="background:#00ff80"></div></div>
+        <span id="bar-edge-val" class="timing-val">—</span>
+      </div>
+      <div class="timing-row">
+        <span class="timing-label" style="color:#ffb400">SIFT</span>
+        <div class="timing-track"><div id="bar-sift" class="timing-fill" style="background:#ffb400"></div></div>
+        <span id="bar-sift-val" class="timing-val">—</span>
+      </div>
+      <div class="timing-row">
+        <span class="timing-label" style="color:#b400ff">CNN</span>
+        <div class="timing-track"><div id="bar-cnn" class="timing-fill" style="background:#b400ff"></div></div>
+        <span id="bar-cnn-val" class="timing-val">—</span>
+      </div>
+      <div class="timing-row">
+        <span class="timing-label" style="color:#0080ff">YOLO</span>
+        <div class="timing-track"><div id="bar-yolo" class="timing-fill" style="background:#0080ff"></div></div>
+        <span id="bar-yolo-val" class="timing-val">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="statsBackdrop" class="stats-backdrop"></div>
+
+  <p id="status" class="status" aria-live="polite"></p>
+  <video id="video" playsinline muted loop style="display:none"></video>
+
+  <script src="app.js?v=7"></script>
+  <script src="charts.js?v=7"></script>
+</body>
+</html>
