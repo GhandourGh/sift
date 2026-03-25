@@ -74,7 +74,7 @@ Edge detection is the oldest and simplest computer vision technique. It finds **
 
 ### Implementation in this project
 ```python
-# algorithms/edge_detector.py
+# src/algorithms.py — edge_process()
 edges = cv2.Canny(gray, cfg.CANNY_LOW, cfg.CANNY_HIGH)
 
 total_pixels = edges.shape[0] * edges.shape[1]
@@ -111,7 +111,7 @@ SIFT (Scale-Invariant Feature Transform) detects **keypoints** — small, distin
 
 ### Implementation in this project
 ```python
-# algorithms/sift_detector.py
+# src/algorithms.py — SIFTDetector
 
 # Step 1-2: Detect keypoints and compute descriptors
 keypoints, descriptors = self.sift.detectAndCompute(gray_small, None)
@@ -177,7 +177,7 @@ A Convolutional Neural Network (CNN) processes an image through layers of learne
 
 #### Implementation in this project
 ```python
-# algorithms/cnn_classifier.py
+# src/algorithms.py — CNNClassifier
 
 # Load pre-trained model (no training needed — transfer learning)
 self.model = models.mobilenet_v2(weights=MobileNet_V2_Weights.IMAGENET1K_V1)
@@ -230,7 +230,7 @@ The key innovation is that all of this happens in a **single forward pass** thro
 
 #### Implementation in this project
 ```python
-# algorithms/yolo_detector.py
+# src/algorithms.py — YOLODetector
 
 # Load pre-trained YOLOv8 nano model
 self.model = YOLO(cfg.MODEL_PATH)  # yolov8n.pt
@@ -383,26 +383,20 @@ By applying these perturbations, you can see which algorithms are reliable enoug
 ## Project Structure
 
 ```
-├── algorithms/
-│   ├── edge_detector.py       Canny edge detection
-│   ├── sift_detector.py       SIFT keypoints + FLANN temporal tracking
-│   ├── cnn_classifier.py      MobileNetV2 image classification
-│   └── yolo_detector.py       YOLOv8 real-time object detection
-├── evaluation/
-│   └── perturbations.py       Noise, blur, rotation, brightness system
-├── visualization/
-│   └── panels.py              Panel rendering with headers and overlays
+├── app.py                     Entry point — starts the FastAPI server
+├── requirements.txt           Python dependencies
+├── src/
+│   ├── config.py              All tunable parameters (thresholds, colors, sizes)
+│   ├── algorithms.py          All 4 CV algorithms (Edge, SIFT, CNN, YOLO)
+│   └── pipeline.py            Pipeline + perturbation system + panel rendering
 ├── web/
 │   ├── index.html             Dashboard layout (2x2 grid + controls)
 │   ├── style.css              Dark theme styling
 │   ├── app.js                 Camera capture loop and API communication
 │   ├── charts.js              Real-time performance charts (Chart.js)
 │   └── public/sift.mp4        Sample video for demo mode
-├── config.py                  All tunable parameters in one place
-├── pipeline.py                Runs all 4 algorithms on each frame
-├── web_app.py                 FastAPI web server (entry point)
-├── yolov8n.pt                 Pre-trained YOLO model weights
-└── requirements.txt           Python dependencies
+└── models/
+    └── yolov8n.pt             Pre-trained YOLO model weights
 ```
 
 ---
@@ -421,4 +415,14 @@ By applying these perturbations, you can see which algorithms are reliable enoug
 
 ---
 
-See [HOWTORUN.md](HOWTORUN.md) for setup and running instructions.
+## How to Run
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the server
+python app.py
+```
+
+Open [http://localhost:8000](http://localhost:8000) in your browser. Click **Camera** or **Video** to start the demo.

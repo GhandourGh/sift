@@ -1,9 +1,9 @@
 """
-FastAPI web app for the CV Evolution Demo.
+CV Evolution Demo — FastAPI web server.
 
 Endpoints:
-  GET  /            — Serve the dashboard
-  GET  /health      — Check detector status
+  GET  /            — Dashboard
+  GET  /health      — Detector status
   POST /process-frame — Process a single frame, return panels + metrics
 """
 
@@ -12,7 +12,8 @@ import logging
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add src/ to path so algorithms, config, pipeline are importable
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"))
 
 logger = logging.getLogger(__name__)
 
@@ -22,11 +23,8 @@ from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from algorithms.sift_detector import SIFTDetector
-from algorithms.yolo_detector import YOLODetector
-from algorithms.cnn_classifier import CNNClassifier
-from evaluation.perturbations import PerturbationManager
-from pipeline import run_cv_pipeline
+from algorithms import SIFTDetector, YOLODetector, CNNClassifier
+from pipeline import PerturbationManager, run_cv_pipeline
 
 app = FastAPI(title="CV Evolution Demo", version="1.0")
 

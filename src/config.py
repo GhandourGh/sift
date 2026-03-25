@@ -1,0 +1,58 @@
+"""
+Configuration constants for the CV Evolution Demo.
+"""
+
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "models", "yolov8n.pt")
+VIDEO_SOURCE = os.path.join(BASE_DIR, "web", "public", "sift.mp4")
+
+# Resolution
+PANEL_W, PANEL_H = 320, 240
+PROCESS_W, PROCESS_H = 320, 240
+HEADER_H = 32
+
+# Canny
+CANNY_LOW = 30
+CANNY_HIGH = 80
+
+# SIFT
+SIFT_N_FEATURES = 0
+SIFT_CONTRAST_THRESH = 0.03
+
+# FLANN
+FLANN_INDEX_KDTREE = 1
+FLANN_TREES = 5
+FLANN_CHECKS = 50
+LOWE_RATIO = 0.7
+
+# YOLO
+YOLO_CONF_THRESH = 0.25
+
+# CNN
+CNN_TOP_K = 5
+CNN_INPUT_SIZE = 224
+
+# Perturbation defaults
+NOISE_SIGMA_DEFAULT = 30
+BLUR_KERNEL_DEFAULT = 11
+ROTATION_ANGLE_DEFAULT = 15
+BRIGHTNESS_DELTA_DEFAULT = -60
+
+# Colors (BGR)
+COLOR_BG = (30, 30, 30)
+COLOR_HEADER_BG = (40, 40, 40)
+COLOR_TEXT = (220, 220, 220)
+COLOR_TEXT_DIM = (140, 140, 140)
+COLOR_BORDER = (60, 60, 60)
+COLOR_EDGE = (128, 255, 0)
+COLOR_SIFT = (0, 180, 255)
+COLOR_CNN = (255, 0, 180)
+COLOR_YOLO = (255, 128, 0)
+
+# Font
+FONT_FACE = 0
+FONT_SCALE_TITLE = 0.55
+FONT_SCALE_METRIC = 0.42
+FONT_THICKNESS = 1
